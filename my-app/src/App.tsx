@@ -5,36 +5,56 @@ import "./App.css";
 
 function App() {
   // Declare a new state variable, which we'll call "pokemonName"
-  const [recipesName, setRecipesName] = useState("");
+  const [animeName, setAnimeName] = useState("");
+  const [animeInfo,setAnimeInfo] = useState<undefined | any>(undefined);
+  const Anime_BASE_URL = "https://animechan.vercel.app/api/quotes/anime?title=";
 
-  const Recipes_BASE_URL = "https://animechan.vercel.app/api/quotes/anime?title=";
+
   return (
     <div>
-      <h1>Recipes Search</h1>
+      <h1>Anime Search</h1>
 
       <div>
-        <label>Recipes Name</label>
+        <label>Anime Name</label>
         <br />
         <input
           type="text"
-          id="recipes-name"
-          name="recipes-name"
-          onChange={(e) => setRecipesName(e.target.value)}
+          id="anime-name"
+          name="anime-name"
+          onChange={(e) => setAnimeName(e.target.value)}
         />
         <br />
         <button onClick={search}>Search</button>
       </div>
 
-      <p>You have entered {recipesName}</p>
+      <p>You have entered {animeName}</p>
 
-      <div id="recipes-result">This will show the result</div>
+       {animeInfo === undefined ? (
+        <p>Anime not found</p>
+      ) : (
+        <div id="anime-result">
+           <p>
+            Anime: {animeInfo.anime}
+            <br />
+            Character: {animeInfo.character} 
+            <br />
+            Quote: {animeInfo.quote}
+          </p>
+        </div>
+      )}
     </div>
   );
 
   function search() {
-    axios.get(Recipes_BASE_URL +  recipesName).then((res) => {
-      console.log(res.data);
-    });
+    axios.get(Anime_BASE_URL +  animeName).then((res) => 
+      {
+        console.log(res.data);
+        setAnimeInfo(res.data[Math.floor(Math.random() * (10 + 1))]);
+      })
+      .catch((err) => {
+        console.log("Anime not found");
+        setAnimeInfo(undefined);
+      });
   }
 }
 
