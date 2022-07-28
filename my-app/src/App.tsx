@@ -75,21 +75,22 @@ function App() {
       </div>
       </div>
       <br/>
-
+      <p style={{textAlign:"center"}} className="hint"><span>Hint:</span> Not sure which anime? Check <a href='https://animechan.vercel.app/api/available/anime'>this</a> out.</p>
+      <br/>
       <p style={{textAlign:"center"}}>You have entered {animeName}</p>
       <br/>
        {animeInfo === undefined || animeInfo===null ? (
-        <p style={{textAlign:"center"}}>{selectedtype} not found</p>
+        <p className="nofound" style={{textAlign:"center"}}>{selectedtype} not found</p>
       ) : (
         <div id="anime-result" className="anime-result" style={{textAlign:"center"}}>
            <p>
-            Anime: {animeInfo.anime}
+            Anime: {animeInfo.anime}.
             <br />
             <br />
-            Character: {animeInfo.character} 
+            Character: {animeInfo.character}.
             <br />
             <br />
-            Quote: {animeInfo.quote}
+            Quote: {animeInfo.quote}.
           </p>
         </div>
       )}

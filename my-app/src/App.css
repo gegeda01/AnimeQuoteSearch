@@ -25,3 +25,11 @@ p label{
   font-size: 20px;
 }
 
+.nofound{
+  font-size: 20px;
+}
+
+.hint span{
+  font-weight: bold;
+}
+
