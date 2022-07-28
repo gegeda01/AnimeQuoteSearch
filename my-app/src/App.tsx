@@ -21,7 +21,7 @@ function App() {
   return (
     <div>
       <div className="search-field">
-        <h1 style={{textAlign:"center"}}>Anime Quote Search</h1>
+        <h1 style={{textAlign:"center"}}><span>Anime  Quote  Search</span></h1>
         <div style={{display: "flex", justifyContent: "center" }}>
         <p>
           <input
@@ -34,7 +34,6 @@ function App() {
           />
           <label htmlFor="anime">Search by Anime Name</label>
         </p>
-
         <p>
           <input
             type="radio"
@@ -47,6 +46,7 @@ function App() {
           <label htmlFor="character">Search by Character Name</label>
         </p>
       </div>
+      <br/>
       <div style={{display: "flex", justifyContent: "center" }}>
       <TextField
           id="search-bar"
@@ -55,31 +55,39 @@ function App() {
           onChange={(prop: any) => {
             setAnimeName(prop.target.value);
           }}
-          label="Enter blow:"
+          label="Enter here:"
           variant="outlined"
           placeholder="Search..."
-          size="small"
+          sx={{
+
+            width: 800
+        }}
         />
-        <IconButton
+        <IconButton 
+          id ="searchicon"
           aria-label="search"
           onClick={() => {
             search();
           }}
         >
-          <SearchIcon style={{ fill: "blue" }} />
+          <SearchIcon style={{ fill: "black",width:"70px"}} />
         </IconButton>
       </div>
       </div>
-      <p style={{textAlign:"center"}}>You have entered {animeName}</p>
+      <br/>
 
-       {animeInfo === undefined ? (
-        <p style={{textAlign:"center"}}>Anime not found</p>
+      <p style={{textAlign:"center"}}>You have entered {animeName}</p>
+      <br/>
+       {animeInfo === undefined || animeInfo===null ? (
+        <p style={{textAlign:"center"}}>{selectedtype} not found</p>
       ) : (
-        <div id="anime-result" style={{textAlign:"center"}}>
+        <div id="anime-result" className="anime-result" style={{textAlign:"center"}}>
            <p>
             Anime: {animeInfo.anime}
             <br />
+            <br />
             Character: {animeInfo.character} 
+            <br />
             <br />
             Quote: {animeInfo.quote}
           </p>
@@ -91,17 +99,17 @@ function App() {
   function search() {
     if(selectedtype==="character"){
       Anime_BASE= "https://animechan.vercel.app/api/quotes/character?name=";
-    }else{
+    }else if(selectedtype==="anime"){
       Anime_BASE= "https://animechan.vercel.app/api/quotes/anime?title=";
     }
-    axios.get(Anime_BASE +  animeName).then((res) => 
+    axios.get(Anime_BASE +  animeName?.toLowerCase()).then((res) => 
       {
         console.log(res.data);
         setAnimeInfo(res.data[Math.floor(Math.random() * (res.data.length))]);//Get a random quote from the list of data
       })
       .catch((err) => {
         console.log("Anime not found");
-        setAnimeInfo(undefined);
+        setAnimeInfo(null);
       });
   }
 }
