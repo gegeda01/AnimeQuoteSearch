@@ -1,2 +1,3 @@
 # AnimeQuoteSearch
-## For MSA phase 2 frontend project
+## Brief
+For MSA phase 2 frontend project
