@@ -8,16 +8,46 @@ import "./App.css";
 
 function App() {
   // Declare a new state variable, which we'll call "pokemonName"
+  const [selectedtype, setSelectedType] = useState<String>();
   const [animeName, setAnimeName] = useState("");
   const [animeInfo,setAnimeInfo] = useState<undefined | any>(undefined);
-  const Anime_BASE_URL = "https://animechan.vercel.app/api/quotes/anime?title=";
-
-
+  const isRadioSelected = (value:string):boolean => selectedtype===value;
+  const radioHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedType(event.target.value);
+  };
+  //const Anime_BASE_URL_NAME = "https://animechan.vercel.app/api/quotes/anime?title=";
+  //const Anime_BASE_URL_CHARACT = "https://animechan.vercel.app/api/quotes/character?name=";
+  var Anime_BASE = "https://animechan.vercel.app/api/random";
   return (
     <div>
       <div className="search-field">
         <h1 style={{textAlign:"center"}}>Anime Quote Search</h1>
         <div style={{display: "flex", justifyContent: "center" }}>
+        <p>
+          <input
+            type="radio"
+            name="anime"
+            value="anime"
+            id="anime"
+            checked={isRadioSelected('anime')}
+            onChange={radioHandler}
+          />
+          <label htmlFor="anime">Search by Anime Name</label>
+        </p>
+
+        <p>
+          <input
+            type="radio"
+            name="character"
+            value="character"
+            id="character"
+            checked={isRadioSelected('character')}
+            onChange={radioHandler}
+          />
+          <label htmlFor="character">Search by Character Name</label>
+        </p>
+      </div>
+      <div style={{display: "flex", justifyContent: "center" }}>
       <TextField
           id="search-bar"
           className="text"
@@ -25,7 +55,7 @@ function App() {
           onChange={(prop: any) => {
             setAnimeName(prop.target.value);
           }}
-          label="Enter a Anime Name..."
+          label="Enter blow:"
           variant="outlined"
           placeholder="Search..."
           size="small"
@@ -59,7 +89,12 @@ function App() {
   );
 
   function search() {
-    axios.get(Anime_BASE_URL +  animeName).then((res) => 
+    if(selectedtype==="character"){
+      Anime_BASE= "https://animechan.vercel.app/api/quotes/character?name=";
+    }else{
+      Anime_BASE= "https://animechan.vercel.app/api/quotes/anime?title=";
+    }
+    axios.get(Anime_BASE +  animeName).then((res) => 
       {
         console.log(res.data);
         setAnimeInfo(res.data[Math.floor(Math.random() * (res.data.length))]);//Get a random quote from the list of data
