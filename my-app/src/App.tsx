@@ -16,8 +16,8 @@ function App() {
   return (
     <div>
       <div className="search-field">
-        <h1  style={{ display: "inline", justifyContent: "center" }}>Anime Quote Search</h1>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <h1 style={{textAlign:"center"}}>Anime Quote Search</h1>
+        <div style={{display: "flex", justifyContent: "center" }}>
       <TextField
           id="search-bar"
           className="text"
@@ -40,12 +40,12 @@ function App() {
         </IconButton>
       </div>
       </div>
-      <p>You have entered {animeName}</p>
+      <p style={{textAlign:"center"}}>You have entered {animeName}</p>
 
        {animeInfo === undefined ? (
-        <p>Anime not found</p>
+        <p style={{textAlign:"center"}}>Anime not found</p>
       ) : (
-        <div id="anime-result">
+        <div id="anime-result" style={{textAlign:"center"}}>
            <p>
             Anime: {animeInfo.anime}
             <br />
